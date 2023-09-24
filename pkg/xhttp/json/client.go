@@ -6,6 +6,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// Client is a wrapper around the core client.
 type Client struct {
 	CoreClient *core.Client
 }

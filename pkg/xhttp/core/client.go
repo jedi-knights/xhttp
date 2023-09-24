@@ -8,15 +8,20 @@ import (
 	"net/http"
 )
 
+//go:generate mockgen -destination=mocks/mock_core.go -package=mocks github.com/jedi-knights/xhttp/pkg/xhttp/core CoreInterface
+
+// CoreInterface is an interface for the core client.
 type CoreInterface interface {
 	Get(requestUrl string) (int, []byte, error)
 }
 
+// Client is a wrapper around the http client.
 type Client struct {
 	HttpClient *http.Client
 	Logger     LoggerInterface
 }
 
+// NewClient returns a new core client with a new logger and a new http client.
 func NewClient() *Client {
 	return &Client{}
 }
