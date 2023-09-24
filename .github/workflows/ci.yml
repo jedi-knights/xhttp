@@ -11,6 +11,7 @@ on:
       - '**'
 
   pull_request:
+    types: [closed]
     branches:
       - main
 
@@ -18,7 +19,15 @@ env:
   GO_VERSION: 1.21
 
 jobs:
+  Setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display GitHub event action
+        run: |
+          echo "GitHub event action: ${{ github.event.action }}"
+
   Analyze:
+    needs: [Setup]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -40,6 +49,7 @@ jobs:
         run: golangci-lint run ./...
 
   Test:
+    needs: [Setup]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -72,7 +82,7 @@ jobs:
           detailed_summary: false
 
   Build:
-    needs: [analyze, test]
+    needs: [Analyze, Test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -90,7 +100,7 @@ jobs:
         run: make build
 
   Publish:
-    needs: build
+    needs: [Build]
     if: github.event_name == 'pull_request' && github.ref == 'refs/heads/main'
     permissions:
       contents: write
