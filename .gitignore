@@ -19,3 +19,12 @@
 
 # Go workspace file
 go.work
+
+# Mock files
+**/mocks
+
+# IntelliJ IDEA
+.idea/
+
+# JUnit test output
+junit.xml
