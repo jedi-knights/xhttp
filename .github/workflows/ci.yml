@@ -22,9 +22,9 @@ jobs:
   Setup:
     runs-on: ubuntu-latest
     steps:
-      - name: Display GitHub event action
+      - name: Display GitHub event name
         run: |
-          echo "GitHub event action: ${{ github.event.action }}"
+          echo "GitHub event name: ${{ github.event_name }}"
 
   Analyze:
     needs: [Setup]
