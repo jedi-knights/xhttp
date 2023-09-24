@@ -14,15 +14,7 @@ env:
   GO_VERSION: 1.21
 
 jobs:
-  Setup:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Display GitHub event name
-        run: |
-          echo "GitHub event name: ${{ github.event_name }}"
-
   Analyze:
-    needs: [Setup]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -44,7 +36,6 @@ jobs:
         run: golangci-lint run ./...
 
   Test:
-    needs: [Setup]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
